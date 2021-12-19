@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/natoine/punchliner/issues"
   },
-  "homepage": "https://github.com/natoine/punchliner#readme"
+  "homepage": "https://github.com/natoine/punchliner#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
