@@ -1,0 +1,19 @@
+{
+  "name": "punchliner",
+  "version": "1.0.0",
+  "description": "a game to guess who wrote that punchline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natoine/punchliner.git"
+  },
+  "author": "natoine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natoine/punchliner/issues"
+  },
+  "homepage": "https://github.com/natoine/punchliner#readme"
+}
