@@ -1,6 +1,6 @@
 'use strict';
 
-const e = React.createElement;
+const reactembed = React.createElement;
 
 class LikeButton extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class LikeButton extends React.Component {
       return 'You liked this.';
     }
 
-    return e(
+    return reactembed(
       'button',
       { onClick: () => this.setState({ liked: true }) },
       'Like'
@@ -22,4 +22,4 @@ class LikeButton extends React.Component {
 }
 
 const domContainer = document.querySelector('#main');
-ReactDOM.render(e(LikeButton), domContainer);
+ReactDOM.render(reactembed(LikeButton), domContainer);
