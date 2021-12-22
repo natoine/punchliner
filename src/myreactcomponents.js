@@ -24,12 +24,12 @@ class Answer extends React.Component {
   }
 
   handleChange(event) {
-    if(event.target.value ==  this.state.punchliner)
-    {
-      console.log("good answer", this.state.punchliner);
-      this.setState({type: "goodanswer"});
-    }
-    else this.setState({type: "neutral"});
+    let uservalue = event.target.value ;
+    let answer = this.state.punchliner
+    if(uservalue.length > answer.length) this.setState({type: "badanswer"});
+    else if(uservalue.length < answer.length) this.setState({type: "neutral"});
+    else if( uservalue ==  answer) this.setState({type: "goodanswer"});
+    else this.setState({type: "badanswer"});
   }
 
   render() {

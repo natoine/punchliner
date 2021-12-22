@@ -58,10 +58,9 @@ var Answer = function (_React$Component2) {
   _createClass(Answer, [{
     key: 'handleChange',
     value: function handleChange(event) {
-      if (event.target.value == this.state.punchliner) {
-        console.log("good answer", this.state.punchliner);
-        this.setState({ type: "goodanswer" });
-      } else this.setState({ type: "neutral" });
+      var uservalue = event.target.value;
+      var answer = this.state.punchliner;
+      if (uservalue.length > answer.length) this.setState({ type: "badanswer" });else if (uservalue.length < answer.length) this.setState({ type: "neutral" });else if (uservalue == answer) this.setState({ type: "goodanswer" });else this.setState({ type: "badanswer" });
     }
   }, {
     key: 'render',
