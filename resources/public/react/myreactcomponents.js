@@ -45,22 +45,36 @@ var Punchline = function (_React$Component) {
 var Answer = function (_React$Component2) {
   _inherits(Answer, _React$Component2);
 
-  function Answer() {
+  function Answer(props) {
     _classCallCheck(this, Answer);
 
-    return _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).apply(this, arguments));
+    var _this2 = _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).call(this, props));
+
+    _this2.state = { type: 'neutral', punchliner: props.punchliner, song: props.song };
+    _this2.handleChange = _this2.handleChange.bind(_this2);
+    return _this2;
   }
 
   _createClass(Answer, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      if (event.target.value == this.state.punchliner) {
+        console.log("good answer", this.state.punchliner);
+        this.setState({ type: "goodanswer" });
+      } else this.setState({ type: "neutral" });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
-        'span',
-        null,
-        'r\xE9ponse : c\'est de : ',
-        this.props.punchliner,
-        ' dans : ',
-        this.props.song
+        'div',
+        { className: 'answer' },
+        React.createElement(
+          'label',
+          null,
+          'c\'est de qui ?'
+        ),
+        React.createElement('textarea', { onChange: this.handleChange, type: this.state.type })
       );
     }
   }]);

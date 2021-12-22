@@ -16,9 +16,28 @@ class Punchline extends React.Component {
 }
 
 class Answer extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {type: 'neutral', punchliner: props.punchliner, song: props.song};
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
+    if(event.target.value ==  this.state.punchliner)
+    {
+      console.log("good answer", this.state.punchliner);
+      this.setState({type: "goodanswer"});
+    }
+    else this.setState({type: "neutral"});
+  }
+
   render() {
     return (
-      <span>réponse : c'est de : {this.props.punchliner} dans : {this.props.song}</span>
+      <div className="answer">
+        <label>c'est de qui ?</label>
+        <textarea onChange={this.handleChange} type={this.state.type}/>
+      </div>
     )
   }
 }
