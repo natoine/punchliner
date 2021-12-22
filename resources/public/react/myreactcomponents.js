@@ -11,10 +11,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Punchline = function (_React$Component) {
   _inherits(Punchline, _React$Component);
 
-  function Punchline(props) {
+  function Punchline() {
     _classCallCheck(this, Punchline);
 
-    return _possibleConstructorReturn(this, (Punchline.__proto__ || Object.getPrototypeOf(Punchline)).call(this, props));
+    return _possibleConstructorReturn(this, (Punchline.__proto__ || Object.getPrototypeOf(Punchline)).apply(this, arguments));
   }
 
   _createClass(Punchline, [{
@@ -24,9 +24,23 @@ var Punchline = function (_React$Component) {
         'div',
         { className: 'punchline' },
         React.createElement(
+          'h1',
+          null,
+          'de qui est cette punchline ?'
+        ),
+        React.createElement(
           'span',
           null,
-          'tout va bien'
+          this.props.punchline.lyrics
+        ),
+        React.createElement('br', null),
+        React.createElement(
+          'span',
+          null,
+          'c\'est de : ',
+          this.props.punchline.punchliner,
+          ' dans ',
+          this.props.punchline.song
         )
       );
     }
@@ -36,4 +50,7 @@ var Punchline = function (_React$Component) {
 }(React.Component);
 
 var domContainer = document.querySelector('#main');
-ReactDOM.render(React.createElement(Punchline, null), domContainer);
+
+var samplepunchline = { "lyrics": "tout va bien", "song": "tout va bien", "punchliner": "orelsan" };
+
+ReactDOM.render(React.createElement(Punchline, { punchline: samplepunchline }), domContainer);

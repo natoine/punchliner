@@ -1,20 +1,22 @@
 'use strict';
 
 class Punchline extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="punchline">
+        <h1>de qui est cette punchline ?</h1>
         <span>
-          tout va bien
+          {this.props.punchline.lyrics}
         </span>
+        <br/>
+        <span>c'est de : {this.props.punchline.punchliner} dans {this.props.punchline.song}</span>
       </div>
     );
   }
 }
 
 const domContainer = document.querySelector('#main');
-ReactDOM.render(<Punchline />, domContainer);
+
+const samplepunchline = {"lyrics":"tout va bien", "song":"tout va bien", "punchliner":"orelsan"};
+
+ReactDOM.render(<Punchline punchline={samplepunchline} />, domContainer);
