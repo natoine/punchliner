@@ -1,25 +1,20 @@
 'use strict';
 
-const reactembed = React.createElement;
-
-class LikeButton extends React.Component {
+class Punchline extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { liked: false };
   }
 
   render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    return reactembed(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
+    return (
+      <div className="punchline">
+        <span>
+          tout va bien
+        </span>
+      </div>
     );
   }
 }
 
 const domContainer = document.querySelector('#main');
-ReactDOM.render(reactembed(LikeButton), domContainer);
+ReactDOM.render(<Punchline />, domContainer);
