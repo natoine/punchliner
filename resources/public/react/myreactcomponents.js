@@ -34,19 +34,38 @@ var Punchline = function (_React$Component) {
           this.props.punchline.lyrics
         ),
         React.createElement('br', null),
-        React.createElement(
-          'span',
-          null,
-          'c\'est de : ',
-          this.props.punchline.punchliner,
-          ' dans ',
-          this.props.punchline.song
-        )
+        React.createElement(Answer, { punchliner: this.props.punchline.punchliner, song: this.props.punchline.song })
       );
     }
   }]);
 
   return Punchline;
+}(React.Component);
+
+var Answer = function (_React$Component2) {
+  _inherits(Answer, _React$Component2);
+
+  function Answer() {
+    _classCallCheck(this, Answer);
+
+    return _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).apply(this, arguments));
+  }
+
+  _createClass(Answer, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'span',
+        null,
+        'r\xE9ponse : c\'est de : ',
+        this.props.punchliner,
+        ' dans : ',
+        this.props.song
+      );
+    }
+  }]);
+
+  return Answer;
 }(React.Component);
 
 var domContainer = document.querySelector('#main');

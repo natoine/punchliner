@@ -9,11 +9,21 @@ class Punchline extends React.Component {
           {this.props.punchline.lyrics}
         </span>
         <br/>
-        <span>c'est de : {this.props.punchline.punchliner} dans {this.props.punchline.song}</span>
+        <Answer punchliner={this.props.punchline.punchliner} song={this.props.punchline.song} />
       </div>
     );
   }
 }
+
+class Answer extends React.Component {
+  render() {
+    return (
+      <span>réponse : c'est de : {this.props.punchliner} dans : {this.props.song}</span>
+    )
+  }
+}
+
+
 
 const domContainer = document.querySelector('#main');
 
