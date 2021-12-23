@@ -73,7 +73,16 @@ var Answer = function (_React$Component2) {
           null,
           'c\'est de qui ?'
         ),
-        React.createElement('textarea', { onChange: this.handleChange, type: this.state.type })
+        React.createElement('textarea', { onChange: this.handleChange }),
+        React.createElement(
+          'div',
+          { className: 'retour ' + this.state.type },
+          React.createElement(
+            'span',
+            null,
+            'c\'est pas \xE7a'
+          )
+        )
       );
     }
   }]);

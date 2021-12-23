@@ -36,7 +36,10 @@ class Answer extends React.Component {
     return (
       <div className="answer">
         <label>c'est de qui ?</label>
-        <textarea onChange={this.handleChange} type={this.state.type}/>
+        <textarea onChange={this.handleChange}/>
+        <div className={`retour ${this.state.type}`}>
+          <span>c'est pas ça</span>
+        </div>
       </div>
     )
   }

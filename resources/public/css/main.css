@@ -23,3 +23,25 @@ body {
     resize: none;
     border-radius: 8px;
   }
+
+.retour {
+    width: 100%;
+    border: solid ;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center ;
+}
+
+.neutral {
+    background-color: lightyellow;
+}
+
+.goodanswer {
+    background-color: lightgreen;
+}
+
+.badanswer {
+    background-color: lightpink;
+}
