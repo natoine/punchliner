@@ -2,14 +2,14 @@ body {
     background-color: bisque;
 }
 
-.main, .punchline, .answer {
+.main, .punchliner, .punchline, .answer {
     display: flex;
     flex-direction: column;
     justify-content: center ;
     align-items: center ;
 }
 
-.punchline, .answer {
+.punchliner, .answer {
     background-color: whitesmoke;
     padding-left: 5%;
     padding-right: 5%;
