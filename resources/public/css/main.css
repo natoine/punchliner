@@ -1,0 +1,20 @@
+body {
+    background-color: bisque;
+}
+
+.main, .punchline, .answer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center ;
+}
+
+.punchline, .answer {
+    background-color: whitesmoke;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.answer {
+    padding-bottom: 5%;
+}
