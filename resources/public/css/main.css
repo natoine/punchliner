@@ -18,3 +18,8 @@ body {
 .answer {
     padding-bottom: 5%;
 }
+
+.answer textarea {
+    resize: none;
+    border-radius: 8px;
+  }
