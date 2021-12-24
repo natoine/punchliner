@@ -59,6 +59,9 @@ class Answer extends React.Component {
 
 const domContainer = document.querySelector('#main');
 
+const urlfetch = "/punchline";
+
+
 const samplepunchline = { "lyrics": "tout va bien", "song": "tout va bien", "punchliner": "orelsan" };
 
 ReactDOM.render(<Punchliner punchline={samplepunchline} />, domContainer);
