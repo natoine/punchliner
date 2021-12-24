@@ -115,6 +115,9 @@ var Answer = function (_React$Component3) {
 
 var domContainer = document.querySelector('#main');
 
-var samplepunchline = { "lyrics": "tout va bien", "song": "tout va bien", "punchliner": "orelsan" };
-
-ReactDOM.render(React.createElement(Punchliner, { punchline: samplepunchline }), domContainer);
+var urlfetch = "/punchline";
+fetch(urlfetch).then(function (response) {
+  response.json().then(function (samplepunchline) {
+    ReactDOM.render(React.createElement(Punchliner, { punchline: samplepunchline }), domContainer);
+  });
+});
