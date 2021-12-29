@@ -11,12 +11,22 @@ app.use(express.json());//needed to parse request body in json
 
 app.use(express.static('resources/public'));
 
+//renvoie une punchline random
 app.get("/punchline", function (request, response) {
-  var punchline = { "lyrics": "qui peut prétendre faire du rap sans prendre position", "song": "menace de mort", "punchliner": "youssoupha" };
-  response.send(punchline);
+  dbservice.getRandomPunchline(function (error, data) {
+    if (error) {
+      response.writeHead(error.code, {
+        'Content-Length': Buffer.byteLength(error.message),
+        'Content-Type': 'text/plain'
+      }).end(error.message);
+    }
+    else {
+      response.send(data);
+    }
+  });
 });
 
-
+//renvoie toutes les punchlines
 app.get('/punchlines', function (request, response) {
   dbservice.getPunchlines(function (error, data) {
     if (error) {
@@ -31,6 +41,8 @@ app.get('/punchlines', function (request, response) {
   });
 });
 
+//crée une nouvelle punchline
+// Attention pas de vérification qu'elle n'existe pas déjà
 app.post('/newpunchline', function (request, response) {
   const newpunchline = request.body;
   dbservice.createPunchline(newpunchline, function (error, newPunchlineId) {

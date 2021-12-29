@@ -16,6 +16,18 @@ function getPunchlines(callback) {
         callback(error, null);});
 }
 
+function getRandomPunchline(callback) {
+    mongodb.MongoClient.connect(urimongo, { useUnifiedTopology: true }).then(client => {
+        client.db(dbname).collection(punchlinescollection).aggregate([{ $sample: { size: 1 } }]).toArray().then(items => {
+            callback(null, items[0]);
+            client.close();
+        });
+    }).catch(function(err){
+        const error = new Error("unable to connect DB");
+        error.code = 500 ;
+        callback(error, null);});
+}
+
 function createPunchline(punchline, callback) {
     mongodb.MongoClient.connect(urimongo, { useUnifiedTopology: true }).then(client => {
         client.db(dbname).collection(punchlinescollection).insertOne(punchline).then(function(data){
@@ -31,5 +43,6 @@ function createPunchline(punchline, callback) {
 
 module.exports = {
     getPunchlines: getPunchlines,
+    getRandomPunchline: getRandomPunchline,
     createPunchline: createPunchline,
 }
