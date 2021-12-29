@@ -103,7 +103,7 @@ var Answer = function (_React$Component3) {
           React.createElement(
             "span",
             null,
-            "c'est pas \xE7a"
+            this.state.type == "goodanswer" ? "c'est ça" : "c'est pas ça"
           )
         )
       );

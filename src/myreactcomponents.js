@@ -48,7 +48,7 @@ class Answer extends React.Component {
         <label>c'est de qui ?</label>
         <textarea onChange={this.handleChange} />
         <div className={`retour ${this.state.type}`}>
-          <span>c'est pas ça</span>
+          <span>{this.state.type == "goodanswer" ? "c'est ça" : "c'est pas ça"}</span>
         </div>
       </div>
     )
