@@ -4,7 +4,7 @@
   "description": "a game to guess who wrote that punchline",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
