@@ -5,6 +5,8 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const dbservice = require('./services/DataBaseService');
+
 app.use(express.static('resources/public'));
 
 app.get("/punchline", function(request, response){
