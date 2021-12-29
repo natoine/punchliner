@@ -55,10 +55,13 @@ class Answer extends React.Component {
   }
 }
 
-
-
 const domContainer = document.querySelector('#main');
 
-const samplepunchline = { "lyrics": "tout va bien", "song": "tout va bien", "punchliner": "orelsan" };
-
-ReactDOM.render(<Punchliner punchline={samplepunchline} />, domContainer);
+const urlfetch = "/punchline";
+fetch(urlfetch).then(function(response){
+  response.json().then(
+    function(samplepunchline){
+      ReactDOM.render(<Punchliner punchline={samplepunchline} />, domContainer);
+    }
+  )
+});
