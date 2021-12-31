@@ -7,6 +7,7 @@ class Punchliner extends React.Component {
         <Punchline lyrics={this.props.punchline.lyrics} />
         <br />
         <Answer punchliner={this.props.punchline.punchliner} song={this.props.punchline.song} />
+        <button onClick={newpunchline}>Punchline Suivante</button>
       </div>
     );
   }
@@ -53,6 +54,10 @@ class Answer extends React.Component {
       </div>
     )
   }
+}
+
+function newpunchline(){
+  location.reload();
 }
 
 const domContainer = document.querySelector('#main');

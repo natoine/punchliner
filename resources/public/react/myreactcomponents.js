@@ -25,7 +25,12 @@ var Punchliner = function (_React$Component) {
         { className: "punchliner" },
         React.createElement(Punchline, { lyrics: this.props.punchline.lyrics }),
         React.createElement("br", null),
-        React.createElement(Answer, { punchliner: this.props.punchline.punchliner, song: this.props.punchline.song })
+        React.createElement(Answer, { punchliner: this.props.punchline.punchliner, song: this.props.punchline.song }),
+        React.createElement(
+          "button",
+          { onClick: newpunchline },
+          "Punchline Suivante"
+        )
       );
     }
   }]);
@@ -112,6 +117,10 @@ var Answer = function (_React$Component3) {
 
   return Answer;
 }(React.Component);
+
+function newpunchline() {
+  location.reload();
+}
 
 var domContainer = document.querySelector('#main');
 
