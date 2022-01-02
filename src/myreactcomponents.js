@@ -1,15 +1,43 @@
 'use strict';
 
 class Punchliner extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      history: [
+        {
+          punchline: props.punchline
+        }
+      ],
+      goodanswers: [],
+      punchlinerstofind: props.punchline.punchliners.length,
+      countpunchlines: 0
+    }
+  }
+
   render() {
     return (
       <div className="punchliner">
         <Punchline lyrics={this.props.punchline.lyrics} />
         <br />
-        <Answer punchliner={this.props.punchline.punchliner} song={this.props.punchline.song} />
+        <PunchlinersToFind count={this.state.punchlinerstofind} />
+        <br/>
+        <Answer punchliners={this.props.punchline.punchliners} />
         <button onClick={newpunchline}>Punchline Suivante</button>
       </div>
     );
+  }
+}
+
+
+class PunchlinersToFind extends React.Component {
+  render() {
+    return (
+      <div className="countpunchliners">
+        <h1>{this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver" } </h1>
+      </div>
+    )
   }
 }
 
@@ -30,24 +58,38 @@ class Answer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { type: 'neutral', punchliner: props.punchliner, song: props.song };
+    let maxlength = 0 ;
+    let countpunchliners = 0 ;
+    for(countpunchliners; countpunchliners < this.props.punchliners.length ; countpunchliners++)
+    {
+      let lengthnamepunchliner = this.props.punchliners[countpunchliners].punchliner.length ;
+      if(lengthnamepunchliner > maxlength) maxlength = lengthnamepunchliner ;
+    }
+    this.state = { type: 'neutral', punchliners: this.props.punchliners, maxlengthanswer: maxlength };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(event) {
     let uservalue = event.target.value;
-    let answer = this.state.punchliner
-    if (uservalue.length > answer.length) this.setState({ type: "badanswer" });
-    else if (uservalue.length < answer.length) this.setState({ type: "neutral" });
-    else if (uservalue == answer) this.setState({ type: "goodanswer" });
-    else this.setState({ type: "badanswer" });
+    if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });
+    else {
+      let localtype = "neutral";
+      let countpunchliners = 0 ;
+      while(countpunchliners < this.state.punchliners.length && localtype == "neutral")
+      {
+        if(this.state.punchliners[countpunchliners].punchliner == uservalue) localtype = "goodanswer";
+        countpunchliners++ ;
+      }
+      this.setState({ type: localtype });
+    }
+    
   }
 
   render() {
     return (
       <div className="answer">
         <label>c'est de qui ?</label>
-        <textarea onChange={this.handleChange} />
+        <textarea onChange={this.handleChange} infomaxlength={this.state.maxlengthanswer}/>
         <div className={`retour ${this.state.type}`}>
           <span>{this.state.type == "goodanswer" ? "c'est ça" : "c'est pas ça"}</span>
         </div>
