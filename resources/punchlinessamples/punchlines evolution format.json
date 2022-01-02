@@ -1,0 +1,48 @@
+v1.0
+{ 
+    "lyrics": "qui peut prétendre faire du rap sans prendre position",
+    "punchliners": [
+        {
+            "song": "boxe avec les mots", 
+            "punchliner": "calbo",
+            "crew": "arsenik"
+        },
+        {
+            "song": "mission", 
+            "punchliner": "rockin squat",
+            "crew": "assassin"
+        },
+        {
+            "song": "dernier mc's", 
+            "punchliner": "lino"
+        },
+        {
+            "song": "le rap a perdu ses esprits", 
+            "punchliner": "keny arkana"
+        },
+        {
+            "song": "menace de mort", 
+            "punchliner": "youssoupha"
+        }
+    ]  
+}
+
+
+v 0.0
+{ 
+    "lyrics": "qui peut prétendre faire du rap sans prendre position", 
+    "song": "menace de mort", 
+    "punchliner": "youssoupha" 
+}
+
+{
+    "lyrics": "tout va bien",
+    "song": "tout va bien",
+    "punchliner": "orelsan"
+}
+
+{
+    "lyrics": "petit frère veut devenir grand mais il a oublié que rien ne sert de co...",
+    "song": "petit frére",
+    "punchliner": "akhenaton"
+}
