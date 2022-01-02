@@ -27,6 +27,27 @@ v1.0
     ]  
 }
 
+{
+    "lyrics": "tout va bien",
+    "punchliners" : [
+        {
+            "song": "tout va bien",
+            "punchliner": "orelsan"
+        }
+    ]
+}
+
+{
+    "lyrics": "petit frère veut devenir grand mais il a oublié que rien ne sert de co...",
+    "punchliners": [
+        {
+            "song": "petit frére",
+            "punchliner": "akhenaton",
+            "crew": "iam"
+        }
+    ]
+}
+
 
 v 0.0
 { 
