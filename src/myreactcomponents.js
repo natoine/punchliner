@@ -70,14 +70,14 @@ class Answer extends React.Component {
   }
 
   handleChange(event) {
-    let uservalue = event.target.value;
+    let uservalue = event.target.value.toLowerCase();
     if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });
     else {
       let localtype = "neutral";
       let countpunchliners = 0 ;
       while(countpunchliners < this.state.punchliners.length && localtype == "neutral")
       {
-        if(this.state.punchliners[countpunchliners].punchliner == uservalue) localtype = "goodanswer";
+        if(this.state.punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) localtype = "goodanswer";
         countpunchliners++ ;
       }
       this.setState({ type: localtype });

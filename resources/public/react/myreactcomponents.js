@@ -132,12 +132,12 @@ var Answer = function (_React$Component4) {
   _createClass(Answer, [{
     key: "handleChange",
     value: function handleChange(event) {
-      var uservalue = event.target.value;
+      var uservalue = event.target.value.toLowerCase();
       if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
         var localtype = "neutral";
         var _countpunchliners = 0;
         while (_countpunchliners < this.state.punchliners.length && localtype == "neutral") {
-          if (this.state.punchliners[_countpunchliners].punchliner == uservalue) localtype = "goodanswer";
+          if (this.state.punchliners[_countpunchliners].punchliner.toLowerCase() == uservalue) localtype = "goodanswer";
           _countpunchliners++;
         }
         this.setState({ type: localtype });
