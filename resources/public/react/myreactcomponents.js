@@ -44,11 +44,7 @@ var Punchliner = function (_React$Component) {
           "Punchline Suivante"
         ),
         React.createElement("br", null),
-        React.createElement(
-          "div",
-          { className: "history" },
-          "votre historique de punchline ici"
-        )
+        React.createElement(History, { history: this.state.history })
       );
     }
   }]);
@@ -56,8 +52,31 @@ var Punchliner = function (_React$Component) {
   return Punchliner;
 }(React.Component);
 
-var PunchlinersToFind = function (_React$Component2) {
-  _inherits(PunchlinersToFind, _React$Component2);
+var History = function (_React$Component2) {
+  _inherits(History, _React$Component2);
+
+  function History() {
+    _classCallCheck(this, History);
+
+    return _possibleConstructorReturn(this, (History.__proto__ || Object.getPrototypeOf(History)).apply(this, arguments));
+  }
+
+  _createClass(History, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "div",
+        { className: "history" },
+        "votre historique de punchlines ici"
+      );
+    }
+  }]);
+
+  return History;
+}(React.Component);
+
+var PunchlinersToFind = function (_React$Component3) {
+  _inherits(PunchlinersToFind, _React$Component3);
 
   function PunchlinersToFind() {
     _classCallCheck(this, PunchlinersToFind);
@@ -84,8 +103,8 @@ var PunchlinersToFind = function (_React$Component2) {
   return PunchlinersToFind;
 }(React.Component);
 
-var Punchline = function (_React$Component3) {
-  _inherits(Punchline, _React$Component3);
+var Punchline = function (_React$Component4) {
+  _inherits(Punchline, _React$Component4);
 
   function Punchline() {
     _classCallCheck(this, Punchline);
@@ -116,23 +135,23 @@ var Punchline = function (_React$Component3) {
   return Punchline;
 }(React.Component);
 
-var Answer = function (_React$Component4) {
-  _inherits(Answer, _React$Component4);
+var Answer = function (_React$Component5) {
+  _inherits(Answer, _React$Component5);
 
   function Answer(props) {
     _classCallCheck(this, Answer);
 
-    var _this4 = _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).call(this, props));
+    var _this5 = _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).call(this, props));
 
     var maxlength = 0;
     var countpunchliners = 0;
-    for (countpunchliners; countpunchliners < _this4.props.punchliners.length; countpunchliners++) {
-      var lengthnamepunchliner = _this4.props.punchliners[countpunchliners].punchliner.length;
+    for (countpunchliners; countpunchliners < _this5.props.punchliners.length; countpunchliners++) {
+      var lengthnamepunchliner = _this5.props.punchliners[countpunchliners].punchliner.length;
       if (lengthnamepunchliner > maxlength) maxlength = lengthnamepunchliner;
     }
-    _this4.state = { type: 'neutral', punchliners: _this4.props.punchliners, maxlengthanswer: maxlength };
-    _this4.handleChange = _this4.handleChange.bind(_this4);
-    return _this4;
+    _this5.state = { type: 'neutral', punchliners: _this5.props.punchliners, maxlengthanswer: maxlength };
+    _this5.handleChange = _this5.handleChange.bind(_this5);
+    return _this5;
   }
 
   _createClass(Answer, [{

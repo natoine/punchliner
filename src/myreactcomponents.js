@@ -26,12 +26,19 @@ class Punchliner extends React.Component {
           <Answer punchliners={this.props.punchline.punchliners} />
           <button onClick={newpunchline}>Punchline Suivante</button>
           <br />
-          <div className="history">votre historique de punchline ici</div>
+          <History history={this.state.history} />
         </div>
     );
   }
 }
 
+class History extends React.Component {
+  render() {
+    return (
+      <div className="history">votre historique de punchlines ici</div>
+    )
+  }
+}
 
 class PunchlinersToFind extends React.Component {
   render() {
