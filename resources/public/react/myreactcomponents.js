@@ -32,7 +32,7 @@ var Punchliner = function (_React$Component) {
     value: function render() {
       return React.createElement(
         "div",
-        { className: "punchliner" },
+        { className: "game" },
         React.createElement(Punchline, { lyrics: this.props.punchline.lyrics }),
         React.createElement("br", null),
         React.createElement(PunchlinersToFind, { count: this.state.punchlinerstofind }),
@@ -42,6 +42,12 @@ var Punchliner = function (_React$Component) {
           "button",
           { onClick: newpunchline },
           "Punchline Suivante"
+        ),
+        React.createElement("br", null),
+        React.createElement(
+          "div",
+          { className: "history" },
+          "votre historique de punchline ici"
         )
       );
     }
