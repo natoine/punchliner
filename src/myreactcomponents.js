@@ -45,7 +45,7 @@ class Punchliner extends React.Component {
           goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
           punchliners.splice(countpunchliners, 1);
           //todo update maxlengthanswer
-          //here we should manage history and make a new fetch to a punchline ?
+          //here we should manage history and make a new fetch to next punchline ?
         }
         countpunchliners++;
       }
