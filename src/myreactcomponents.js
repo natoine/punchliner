@@ -6,8 +6,8 @@ class Punchliner extends React.Component {
     super(props);
     let maxlengthanswer = 0;
     let countpunchliners = 0;
-    let punchliners = this.props.punchline.punchliners ;
-    let punchlinerslength = punchliners.length ;
+    let punchliners = this.props.punchline.punchliners;
+    let punchlinerslength = punchliners.length;
     //todo fct
     for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
       let lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
@@ -34,15 +34,15 @@ class Punchliner extends React.Component {
     else {
       let localtype = "neutral";
       let countpunchliners = 0;
-      let punchliners = this.state.punchliners ;
-      let stilltofind = this.state.stilltofind ;
-      let goodanswers = this.state.goodanswers ;
-      let punchlinerslength = punchliners.length ;
+      let punchliners = this.state.punchliners;
+      let stilltofind = this.state.stilltofind;
+      let goodanswers = this.state.goodanswers;
+      let punchlinerslength = punchliners.length;
       while (countpunchliners < punchlinerslength && localtype == "neutral") {
         if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
           localtype = "goodanswer";
-          stilltofind = stilltofind -1 ;
-          goodanswers = goodanswers.concat({lyrics:this.props.punchline.lyrics, punchliner:punchliners[countpunchliners].punchliner});
+          stilltofind = stilltofind - 1;
+          goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
           punchliners.splice(countpunchliners, 1);
           //todo update maxlengthanswer
           //here we should manage history and make a new fetch to a punchline ?
@@ -70,33 +70,58 @@ class Punchliner extends React.Component {
         </div>
         <button onClick={newpunchline}>Punchline Suivante</button>
         <br />
-        <History history={this.state.history} punchlinersfound={this.state.goodanswers}/>
+        <History history={this.state.history} punchlinersfound={this.state.goodanswers} />
       </div>
     );
   }
 }
 
-
 class History extends React.Component {
+  
+  render() {
+    let listhistorique;
+    let headlist;
+    let punchlinersfoundslength = this.props.punchlinersfound.length;
+    if (punchlinersfoundslength > 0) {
+      headlist = <div><h2>Punchline</h2><h2>punchliner</h2></div>;
+      listhistorique = this.props.punchlinersfound.map(function (punchliner, count) {
+        return( <HistoryLine lyrics={punchliner.lyrics} punchliner={punchliner.punchliner} key={count}/> );
+      });
+    }
+    return (
+      <div className="history">
+        <h2>vous avez trouvé {this.props.history.length} punchlines et {this.props.punchlinersfound.length} punchliners</h2>
+        {headlist}
+        {listhistorique}
+      </div>
+    )
+  }
+
+}
+
+class HistoryLine extends React.Component {
   render() {
     return (
-      <div className="history">vous avez trouvé {this.props.history.length} punchlines et {this.props.punchlinersfound.length} punchliners</div>
+      <div className="historyline">
+        <span>{this.props.lyrics}</span>
+        <span>{this.props.punchliner}</span>
+      </div>
     )
   }
 }
 
 class PunchlinersToFind extends React.Component {
   render() {
-    let h1 ;
-    if(this.props.count == this.props.max) {
-      h1 = <h1>{this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver"} </h1>
+    let h1;
+    if (this.props.count == this.props.max) {
+      h1 = <h1>{this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver"} </h1>;
     }
     else {
-      h1 =  <h1>{this.props.count == 1 ? "Encore un punchliner à trouver" : "Encore " + this.props.count + " punchliners à trouver"} </h1>
+      h1 = <h1>{this.props.count == 1 ? "Encore un punchliner à trouver" : "Encore " + this.props.count + " punchliners à trouver"} </h1>;
     }
     return (
       <div className="countpunchliners">
-       {h1}
+        {h1}
       </div>
     )
   }

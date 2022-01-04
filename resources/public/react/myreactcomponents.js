@@ -120,14 +120,42 @@ var History = function (_React$Component2) {
   _createClass(History, [{
     key: 'render',
     value: function render() {
+      var listhistorique = void 0;
+      var headlist = void 0;
+      var punchlinersfoundslength = this.props.punchlinersfound.length;
+      if (punchlinersfoundslength > 0) {
+        headlist = React.createElement(
+          'div',
+          null,
+          React.createElement(
+            'h2',
+            null,
+            'Punchline'
+          ),
+          React.createElement(
+            'h2',
+            null,
+            'punchliner'
+          )
+        );
+        listhistorique = this.props.punchlinersfound.map(function (punchliner, count) {
+          return React.createElement(HistoryLine, { lyrics: punchliner.lyrics, punchliner: punchliner.punchliner, key: count });
+        });
+      }
       return React.createElement(
         'div',
         { className: 'history' },
-        'vous avez trouv\xE9 ',
-        this.props.history.length,
-        ' punchlines et ',
-        this.props.punchlinersfound.length,
-        ' punchliners'
+        React.createElement(
+          'h2',
+          null,
+          'vous avez trouv\xE9 ',
+          this.props.history.length,
+          ' punchlines et ',
+          this.props.punchlinersfound.length,
+          ' punchliners'
+        ),
+        headlist,
+        listhistorique
       );
     }
   }]);
@@ -135,8 +163,40 @@ var History = function (_React$Component2) {
   return History;
 }(React.Component);
 
-var PunchlinersToFind = function (_React$Component3) {
-  _inherits(PunchlinersToFind, _React$Component3);
+var HistoryLine = function (_React$Component3) {
+  _inherits(HistoryLine, _React$Component3);
+
+  function HistoryLine() {
+    _classCallCheck(this, HistoryLine);
+
+    return _possibleConstructorReturn(this, (HistoryLine.__proto__ || Object.getPrototypeOf(HistoryLine)).apply(this, arguments));
+  }
+
+  _createClass(HistoryLine, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'historyline' },
+        React.createElement(
+          'span',
+          null,
+          this.props.lyrics
+        ),
+        React.createElement(
+          'span',
+          null,
+          this.props.punchliner
+        )
+      );
+    }
+  }]);
+
+  return HistoryLine;
+}(React.Component);
+
+var PunchlinersToFind = function (_React$Component4) {
+  _inherits(PunchlinersToFind, _React$Component4);
 
   function PunchlinersToFind() {
     _classCallCheck(this, PunchlinersToFind);
@@ -174,8 +234,8 @@ var PunchlinersToFind = function (_React$Component3) {
   return PunchlinersToFind;
 }(React.Component);
 
-var Punchline = function (_React$Component4) {
-  _inherits(Punchline, _React$Component4);
+var Punchline = function (_React$Component5) {
+  _inherits(Punchline, _React$Component5);
 
   function Punchline() {
     _classCallCheck(this, Punchline);
