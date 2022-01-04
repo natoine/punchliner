@@ -16,34 +16,79 @@ var Punchliner = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Punchliner.__proto__ || Object.getPrototypeOf(Punchliner)).call(this, props));
 
+    var maxlengthanswer = 0;
+    var countpunchliners = 0;
+    var punchliners = _this.props.punchline.punchliners;
+    var punchlinerslength = punchliners.length;
+    for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
+      var lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
+      if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
+    }
+
     _this.state = {
-      history: [{
-        punchline: props.punchline
-      }],
+      history: [],
       goodanswers: [],
-      punchlinerstofind: props.punchline.punchliners.length,
-      countpunchlines: 0
+      punchlinerstofind: punchlinerslength,
+      countpunchlinesfound: 0,
+      type: 'neutral',
+      maxlengthanswer: maxlengthanswer
     };
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
   _createClass(Punchliner, [{
-    key: "render",
+    key: 'handleChange',
+    value: function handleChange(event) {
+      var uservalue = event.target.value.toLowerCase();
+      if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
+        var localtype = "neutral";
+        var _countpunchliners = 0;
+        var _punchliners = this.props.punchline.punchliners;
+        while (_countpunchliners < _punchliners.length && localtype == "neutral") {
+          if (_punchliners[_countpunchliners].punchliner.toLowerCase() == uservalue) {
+            localtype = "goodanswer";
+          }
+          _countpunchliners++;
+        }
+        this.setState({ type: localtype });
+      }
+    }
+  }, {
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "game" },
+        'div',
+        { className: 'game' },
         React.createElement(Punchline, { lyrics: this.props.punchline.lyrics }),
-        React.createElement("br", null),
+        React.createElement('br', null),
         React.createElement(PunchlinersToFind, { count: this.state.punchlinerstofind }),
-        React.createElement("br", null),
-        React.createElement(Answer, { punchliners: this.props.punchline.punchliners }),
+        React.createElement('br', null),
         React.createElement(
-          "button",
-          { onClick: newpunchline },
-          "Punchline Suivante"
+          'div',
+          { className: 'answer' },
+          React.createElement(
+            'label',
+            null,
+            'c\'est de qui ?'
+          ),
+          React.createElement('textarea', { onChange: this.handleChange }),
+          React.createElement(
+            'div',
+            { className: 'retour ' + this.state.type },
+            React.createElement(
+              'span',
+              null,
+              this.state.type == "goodanswer" ? "c'est ça" : "c'est pas ça"
+            )
+          )
         ),
-        React.createElement("br", null),
+        React.createElement(
+          'button',
+          { onClick: newpunchline },
+          'Punchline Suivante'
+        ),
+        React.createElement('br', null),
         React.createElement(History, { history: this.state.history })
       );
     }
@@ -62,12 +107,14 @@ var History = function (_React$Component2) {
   }
 
   _createClass(History, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "history" },
-        "votre historique de punchlines ici"
+        'div',
+        { className: 'history' },
+        'vous avez trouv\xE9 ',
+        this.props.history.length,
+        ' punchlines'
       );
     }
   }]);
@@ -85,16 +132,16 @@ var PunchlinersToFind = function (_React$Component3) {
   }
 
   _createClass(PunchlinersToFind, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "countpunchliners" },
+        'div',
+        { className: 'countpunchliners' },
         React.createElement(
-          "h1",
+          'h1',
           null,
           this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver",
-          " "
+          ' '
         )
       );
     }
@@ -113,18 +160,18 @@ var Punchline = function (_React$Component4) {
   }
 
   _createClass(Punchline, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "punchline" },
+        'div',
+        { className: 'punchline' },
         React.createElement(
-          "h1",
+          'h1',
           null,
-          "de qui est cette punchline ?"
+          'de qui est cette punchline ?'
         ),
         React.createElement(
-          "span",
+          'span',
           null,
           this.props.lyrics
         )
@@ -133,67 +180,6 @@ var Punchline = function (_React$Component4) {
   }]);
 
   return Punchline;
-}(React.Component);
-
-var Answer = function (_React$Component5) {
-  _inherits(Answer, _React$Component5);
-
-  function Answer(props) {
-    _classCallCheck(this, Answer);
-
-    var _this5 = _possibleConstructorReturn(this, (Answer.__proto__ || Object.getPrototypeOf(Answer)).call(this, props));
-
-    var maxlength = 0;
-    var countpunchliners = 0;
-    for (countpunchliners; countpunchliners < _this5.props.punchliners.length; countpunchliners++) {
-      var lengthnamepunchliner = _this5.props.punchliners[countpunchliners].punchliner.length;
-      if (lengthnamepunchliner > maxlength) maxlength = lengthnamepunchliner;
-    }
-    _this5.state = { type: 'neutral', punchliners: _this5.props.punchliners, maxlengthanswer: maxlength };
-    _this5.handleChange = _this5.handleChange.bind(_this5);
-    return _this5;
-  }
-
-  _createClass(Answer, [{
-    key: "handleChange",
-    value: function handleChange(event) {
-      var uservalue = event.target.value.toLowerCase();
-      if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
-        var localtype = "neutral";
-        var _countpunchliners = 0;
-        while (_countpunchliners < this.state.punchliners.length && localtype == "neutral") {
-          if (this.state.punchliners[_countpunchliners].punchliner.toLowerCase() == uservalue) localtype = "goodanswer";
-          _countpunchliners++;
-        }
-        this.setState({ type: localtype });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        { className: "answer" },
-        React.createElement(
-          "label",
-          null,
-          "c'est de qui ?"
-        ),
-        React.createElement("textarea", { onChange: this.handleChange, infomaxlength: this.state.maxlengthanswer }),
-        React.createElement(
-          "div",
-          { className: "retour " + this.state.type },
-          React.createElement(
-            "span",
-            null,
-            this.state.type == "goodanswer" ? "c'est ça" : "c'est pas ça"
-          )
-        )
-      );
-    }
-  }]);
-
-  return Answer;
 }(React.Component);
 
 function newpunchline() {
