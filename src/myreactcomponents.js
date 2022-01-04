@@ -8,16 +8,19 @@ class Punchliner extends React.Component {
     let countpunchliners = 0;
     let punchliners = this.props.punchline.punchliners ;
     let punchlinerslength = punchliners.length ;
+    //todo fct
     for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
       let lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
       if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
     }
 
     this.state = {
+      punchliners: punchliners,
       history: [
       ],
       goodanswers: [],
       punchlinerstofind: punchlinerslength,
+      stilltofind: punchlinerslength,
       countpunchlinesfound: 0,
       type: 'neutral',
       maxlengthanswer: maxlengthanswer
@@ -31,14 +34,22 @@ class Punchliner extends React.Component {
     else {
       let localtype = "neutral";
       let countpunchliners = 0;
-      let punchliners = this.props.punchline.punchliners ;
-      while (countpunchliners < punchliners.length && localtype == "neutral") {
+      let punchliners = this.state.punchliners ;
+      let stilltofind = this.state.stilltofind ;
+      let goodanswers = this.state.goodanswers ;
+      let punchlinerslength = punchliners.length ;
+      while (countpunchliners < punchlinerslength && localtype == "neutral") {
         if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
           localtype = "goodanswer";
+          stilltofind = stilltofind -1 ;
+          goodanswers = goodanswers.concat({lyrics:this.props.punchline.lyrics, punchliner:punchliners[countpunchliners].punchliner});
+          punchliners.splice(countpunchliners, 1);
+          //todo update maxlengthanswer
+          //here we should manage history and make a new fetch to a punchline ?
         }
         countpunchliners++;
       }
-      this.setState({ type: localtype });
+      this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers });
     }
 
   }
@@ -48,7 +59,7 @@ class Punchliner extends React.Component {
       <div className="game">
         <Punchline lyrics={this.props.punchline.lyrics} />
         <br />
-        <PunchlinersToFind count={this.state.punchlinerstofind} />
+        <PunchlinersToFind count={this.state.stilltofind} max={this.state.punchlinerstofind} />
         <br />
         <div className="answer">
           <label>c'est de qui ?</label>
@@ -59,7 +70,7 @@ class Punchliner extends React.Component {
         </div>
         <button onClick={newpunchline}>Punchline Suivante</button>
         <br />
-        <History history={this.state.history} />
+        <History history={this.state.history} punchlinersfound={this.state.goodanswers}/>
       </div>
     );
   }
@@ -69,16 +80,23 @@ class Punchliner extends React.Component {
 class History extends React.Component {
   render() {
     return (
-      <div className="history">vous avez trouvé {this.props.history.length} punchlines</div>
+      <div className="history">vous avez trouvé {this.props.history.length} punchlines et {this.props.punchlinersfound.length} punchliners</div>
     )
   }
 }
 
 class PunchlinersToFind extends React.Component {
   render() {
+    let h1 ;
+    if(this.props.count == this.props.max) {
+      h1 = <h1>{this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver"} </h1>
+    }
+    else {
+      h1 =  <h1>{this.props.count == 1 ? "Encore un punchliner à trouver" : "Encore " + this.props.count + " punchliners à trouver"} </h1>
+    }
     return (
       <div className="countpunchliners">
-        <h1>{this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver"} </h1>
+       {h1}
       </div>
     )
   }

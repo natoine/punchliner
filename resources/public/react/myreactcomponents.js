@@ -20,15 +20,18 @@ var Punchliner = function (_React$Component) {
     var countpunchliners = 0;
     var punchliners = _this.props.punchline.punchliners;
     var punchlinerslength = punchliners.length;
+    //todo fct
     for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
       var lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
       if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
     }
 
     _this.state = {
+      punchliners: punchliners,
       history: [],
       goodanswers: [],
       punchlinerstofind: punchlinerslength,
+      stilltofind: punchlinerslength,
       countpunchlinesfound: 0,
       type: 'neutral',
       maxlengthanswer: maxlengthanswer
@@ -44,14 +47,22 @@ var Punchliner = function (_React$Component) {
       if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
         var localtype = "neutral";
         var _countpunchliners = 0;
-        var _punchliners = this.props.punchline.punchliners;
-        while (_countpunchliners < _punchliners.length && localtype == "neutral") {
+        var _punchliners = this.state.punchliners;
+        var stilltofind = this.state.stilltofind;
+        var goodanswers = this.state.goodanswers;
+        var _punchlinerslength = _punchliners.length;
+        while (_countpunchliners < _punchlinerslength && localtype == "neutral") {
           if (_punchliners[_countpunchliners].punchliner.toLowerCase() == uservalue) {
             localtype = "goodanswer";
+            stilltofind = stilltofind - 1;
+            goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: _punchliners[_countpunchliners].punchliner });
+            _punchliners.splice(_countpunchliners, 1);
+            //todo update maxlengthanswer
+            //here we should manage history and make a new fetch to a punchline ?
           }
           _countpunchliners++;
         }
-        this.setState({ type: localtype });
+        this.setState({ type: localtype, stilltofind: stilltofind, punchliners: _punchliners, goodanswers: goodanswers });
       }
     }
   }, {
@@ -62,7 +73,7 @@ var Punchliner = function (_React$Component) {
         { className: 'game' },
         React.createElement(Punchline, { lyrics: this.props.punchline.lyrics }),
         React.createElement('br', null),
-        React.createElement(PunchlinersToFind, { count: this.state.punchlinerstofind }),
+        React.createElement(PunchlinersToFind, { count: this.state.stilltofind, max: this.state.punchlinerstofind }),
         React.createElement('br', null),
         React.createElement(
           'div',
@@ -89,7 +100,7 @@ var Punchliner = function (_React$Component) {
           'Punchline Suivante'
         ),
         React.createElement('br', null),
-        React.createElement(History, { history: this.state.history })
+        React.createElement(History, { history: this.state.history, punchlinersfound: this.state.goodanswers })
       );
     }
   }]);
@@ -114,7 +125,9 @@ var History = function (_React$Component2) {
         { className: 'history' },
         'vous avez trouv\xE9 ',
         this.props.history.length,
-        ' punchlines'
+        ' punchlines et ',
+        this.props.punchlinersfound.length,
+        ' punchliners'
       );
     }
   }]);
@@ -134,15 +147,26 @@ var PunchlinersToFind = function (_React$Component3) {
   _createClass(PunchlinersToFind, [{
     key: 'render',
     value: function render() {
-      return React.createElement(
-        'div',
-        { className: 'countpunchliners' },
-        React.createElement(
+      var h1 = void 0;
+      if (this.props.count == this.props.max) {
+        h1 = React.createElement(
           'h1',
           null,
           this.props.count == 1 ? "Un punchliner à trouver" : this.props.count + " punchliners à trouver",
           ' '
-        )
+        );
+      } else {
+        h1 = React.createElement(
+          'h1',
+          null,
+          this.props.count == 1 ? "Encore un punchliner à trouver" : "Encore " + this.props.count + " punchliners à trouver",
+          ' '
+        );
+      }
+      return React.createElement(
+        'div',
+        { className: 'countpunchliners' },
+        h1
       );
     }
   }]);
