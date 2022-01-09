@@ -8,6 +8,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function maxlengthpunclhiners(punchliners) {
+  var maxlengthanswer = 0;
+  var punchlinerslength = punchliners.length;
+  var countpunchliners = 0;
+  for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
+    var lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
+    if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
+  }
+  return maxlengthanswer;
+}
+
 var Punchliner = function (_React$Component) {
   _inherits(Punchliner, _React$Component);
 
@@ -16,15 +27,9 @@ var Punchliner = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Punchliner.__proto__ || Object.getPrototypeOf(Punchliner)).call(this, props));
 
-    var maxlengthanswer = 0;
-    var countpunchliners = 0;
     var punchliners = _this.props.punchline.punchliners;
     var punchlinerslength = punchliners.length;
-    //todo fct
-    for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
-      var lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
-      if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
-    }
+    var maxlengthanswer = maxlengthpunclhiners(punchliners);
 
     _this.state = {
       punchliners: punchliners,
@@ -46,23 +51,25 @@ var Punchliner = function (_React$Component) {
       var uservalue = event.target.value.toLowerCase();
       if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
         var localtype = "neutral";
-        var _countpunchliners = 0;
-        var _punchliners = this.state.punchliners;
+        var countpunchliners = 0;
+        var punchliners = this.state.punchliners;
         var stilltofind = this.state.stilltofind;
         var goodanswers = this.state.goodanswers;
-        var _punchlinerslength = _punchliners.length;
-        while (_countpunchliners < _punchlinerslength && localtype == "neutral") {
-          if (_punchliners[_countpunchliners].punchliner.toLowerCase() == uservalue) {
+        var punchlinerslength = punchliners.length;
+        var newmaxlengthanwer = this.state.maxlengthanswer;
+        while (countpunchliners < punchlinerslength && localtype == "neutral") {
+          if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
             localtype = "goodanswer";
             stilltofind = stilltofind - 1;
-            goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: _punchliners[_countpunchliners].punchliner });
-            _punchliners.splice(_countpunchliners, 1);
-            //todo update maxlengthanswer
-            //here we should manage history and make a new fetch to a punchline ?
+            goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
+            punchliners.splice(countpunchliners, 1);
+            //update maxlengthanswer
+            newmaxlengthanwer = maxlengthpunclhiners(punchliners);
+            //here we should manage history and make a new fetch to next punchline ?
           }
-          _countpunchliners++;
+          countpunchliners++;
         }
-        this.setState({ type: localtype, stilltofind: stilltofind, punchliners: _punchliners, goodanswers: goodanswers });
+        this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
       }
     }
   }, {

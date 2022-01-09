@@ -1,18 +1,23 @@
 'use strict';
 
+function maxlengthpunclhiners(punchliners){
+  let maxlengthanswer = 0;
+  let punchlinerslength = punchliners.length;
+  let countpunchliners = 0 ;
+  for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
+    let lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
+    if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
+  }
+  return maxlengthanswer ;
+}
+
 class Punchliner extends React.Component {
 
   constructor(props) {
     super(props);
-    let maxlengthanswer = 0;
-    let countpunchliners = 0;
     let punchliners = this.props.punchline.punchliners;
     let punchlinerslength = punchliners.length;
-    //todo fct
-    for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
-      let lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
-      if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
-    }
+    let maxlengthanswer = maxlengthpunclhiners(punchliners);
 
     this.state = {
       punchliners: punchliners,
@@ -38,18 +43,20 @@ class Punchliner extends React.Component {
       let stilltofind = this.state.stilltofind;
       let goodanswers = this.state.goodanswers;
       let punchlinerslength = punchliners.length;
+      let newmaxlengthanwer = this.state.maxlengthanswer;
       while (countpunchliners < punchlinerslength && localtype == "neutral") {
         if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
           localtype = "goodanswer";
           stilltofind = stilltofind - 1;
           goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
           punchliners.splice(countpunchliners, 1);
-          //todo update maxlengthanswer
+          //update maxlengthanswer
+          newmaxlengthanwer = maxlengthpunclhiners(punchliners);
           //here we should manage history and make a new fetch to next punchline ?
         }
         countpunchliners++;
       }
-      this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers });
+      this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
     }
 
   }
