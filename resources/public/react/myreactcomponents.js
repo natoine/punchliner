@@ -2,11 +2,27 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function newpunchline() {
+  location.reload();
+}
+
+//init page
+
+var domContainer = document.querySelector('#main');
+
+fetch("/punchline").then(function (response) {
+  response.json().then(function (samplepunchline) {
+    ReactDOM.render(React.createElement(Punchliner, { punchline: samplepunchline }), domContainer);
+  });
+});
 
 function maxlengthpunclhiners(punchliners) {
   var maxlengthanswer = 0;
@@ -32,6 +48,7 @@ var Punchliner = function (_React$Component) {
     var maxlengthanswer = maxlengthpunclhiners(punchliners);
 
     _this.state = {
+      lyrics: _this.props.punchline.lyrics,
       punchliners: punchliners,
       history: [],
       goodanswers: [],
@@ -48,6 +65,8 @@ var Punchliner = function (_React$Component) {
   _createClass(Punchliner, [{
     key: 'handleChange',
     value: function handleChange(event) {
+      var _this2 = this;
+
       var uservalue = event.target.value.toLowerCase();
       if (uservalue.length > this.state.maxlengthanswer) this.setState({ type: "badanswer" });else {
         var localtype = "neutral";
@@ -61,15 +80,39 @@ var Punchliner = function (_React$Component) {
           if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
             localtype = "goodanswer";
             stilltofind = stilltofind - 1;
-            goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
+            goodanswers = goodanswers.concat({ lyrics: this.state.lyrics, punchliner: punchliners[countpunchliners].punchliner });
             punchliners.splice(countpunchliners, 1);
             //update maxlengthanswer
             newmaxlengthanwer = maxlengthpunclhiners(punchliners);
-            //here we should manage history and make a new fetch to next punchline ?
           }
           countpunchliners++;
         }
-        this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
+        if (stilltofind > 0) this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
+        //need to go to the next punchline
+        else {
+            console.log("gonna fetch a new question");
+            fetch("/punchline").then(function (response) {
+              response.json().then(function (newpunchlinequestion) {
+                console.log("fetch done");
+                var history = [].concat(_toConsumableArray(_this2.state.history), [_this2.props]);
+                var punchliners = newpunchlinequestion.punchliners;
+                var punchlinerslength = punchliners.length;
+                var newcountpuhcnlinesfound = _this2.state.countpunchlinesfound++;
+                var newmaxlengthanswer = maxlengthpunclhiners(punchliners);
+                _this2.setState({
+                  lyrics: newpunchlinequestion.lyrics,
+                  punchliners: punchliners,
+                  history: history,
+                  goodanswers: goodanswers,
+                  punchlinerstofind: punchlinerslength,
+                  stilltofind: punchlinerslength,
+                  countpunchlinesfound: newcountpuhcnlinesfound,
+                  type: "neutral",
+                  maxlengthanswer: newmaxlengthanswer
+                });
+              });
+            });
+          }
       }
     }
   }, {
@@ -78,7 +121,7 @@ var Punchliner = function (_React$Component) {
       return React.createElement(
         'div',
         { className: 'game' },
-        React.createElement(Punchline, { lyrics: this.props.punchline.lyrics }),
+        React.createElement(Punchline, { lyrics: this.state.lyrics }),
         React.createElement('br', null),
         React.createElement(PunchlinersToFind, { count: this.state.stilltofind, max: this.state.punchlinerstofind }),
         React.createElement('br', null),
@@ -272,16 +315,3 @@ var Punchline = function (_React$Component5) {
 
   return Punchline;
 }(React.Component);
-
-function newpunchline() {
-  location.reload();
-}
-
-var domContainer = document.querySelector('#main');
-
-var urlfetch = "/punchline";
-fetch(urlfetch).then(function (response) {
-  response.json().then(function (samplepunchline) {
-    ReactDOM.render(React.createElement(Punchliner, { punchline: samplepunchline }), domContainer);
-  });
-});

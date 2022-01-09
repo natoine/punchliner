@@ -1,14 +1,28 @@
 'use strict';
 
-function maxlengthpunclhiners(punchliners){
+function newpunchline() {
+  location.reload();
+}
+
+//init page
+
+const domContainer = document.querySelector('#main');
+
+fetch("/punchline").then(function(response){
+  response.json().then(function(samplepunchline){
+    ReactDOM.render(<Punchliner punchline={samplepunchline} />, domContainer);
+  })
+})
+
+function maxlengthpunclhiners(punchliners) {
   let maxlengthanswer = 0;
   let punchlinerslength = punchliners.length;
-  let countpunchliners = 0 ;
+  let countpunchliners = 0;
   for (countpunchliners; countpunchliners < punchlinerslength; countpunchliners++) {
     let lengthnamepunchliner = punchliners[countpunchliners].punchliner.length;
     if (lengthnamepunchliner > maxlengthanswer) maxlengthanswer = lengthnamepunchliner;
   }
-  return maxlengthanswer ;
+  return maxlengthanswer;
 }
 
 class Punchliner extends React.Component {
@@ -20,9 +34,9 @@ class Punchliner extends React.Component {
     let maxlengthanswer = maxlengthpunclhiners(punchliners);
 
     this.state = {
+      lyrics: this.props.punchline.lyrics,
       punchliners: punchliners,
-      history: [
-      ],
+      history: [],
       goodanswers: [],
       punchlinerstofind: punchlinerslength,
       stilltofind: punchlinerslength,
@@ -48,15 +62,39 @@ class Punchliner extends React.Component {
         if (punchliners[countpunchliners].punchliner.toLowerCase() == uservalue) {
           localtype = "goodanswer";
           stilltofind = stilltofind - 1;
-          goodanswers = goodanswers.concat({ lyrics: this.props.punchline.lyrics, punchliner: punchliners[countpunchliners].punchliner });
+          goodanswers = goodanswers.concat({ lyrics: this.state.lyrics, punchliner: punchliners[countpunchliners].punchliner });
           punchliners.splice(countpunchliners, 1);
           //update maxlengthanswer
           newmaxlengthanwer = maxlengthpunclhiners(punchliners);
-          //here we should manage history and make a new fetch to next punchline ?
         }
         countpunchliners++;
       }
-      this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
+      if (stilltofind > 0) this.setState({ type: localtype, stilltofind: stilltofind, punchliners: punchliners, goodanswers: goodanswers, maxlengthanswer: newmaxlengthanwer });
+      //need to go to the next punchline
+      else {
+        console.log("gonna fetch a new question");
+        fetch("/punchline").then((response)=>{
+          response.json().then((newpunchlinequestion)=>{
+            console.log("fetch done");
+            let history = [ ...this.state.history, this.props];
+            let punchliners = newpunchlinequestion.punchliners;
+            let punchlinerslength = punchliners.length;
+            let newcountpuhcnlinesfound = this.state.countpunchlinesfound++;
+            let newmaxlengthanswer = maxlengthpunclhiners(punchliners);
+            this.setState({
+              lyrics: newpunchlinequestion.lyrics,
+              punchliners: punchliners,
+              history: history,
+              goodanswers: goodanswers,
+              punchlinerstofind: punchlinerslength,
+              stilltofind: punchlinerslength,
+              countpunchlinesfound: newcountpuhcnlinesfound,
+              type: "neutral",
+              maxlengthanswer: newmaxlengthanswer
+            })
+          });
+        });
+      }
     }
 
   }
@@ -64,7 +102,7 @@ class Punchliner extends React.Component {
   render() {
     return (
       <div className="game">
-        <Punchline lyrics={this.props.punchline.lyrics} />
+        <Punchline lyrics={this.state.lyrics} />
         <br />
         <PunchlinersToFind count={this.state.stilltofind} max={this.state.punchlinerstofind} />
         <br />
@@ -84,7 +122,7 @@ class Punchliner extends React.Component {
 }
 
 class History extends React.Component {
-  
+
   render() {
     let listhistorique;
     let headlist;
@@ -92,7 +130,7 @@ class History extends React.Component {
     if (punchlinersfoundslength > 0) {
       headlist = <div><h2>Punchline</h2><h2>punchliner</h2></div>;
       listhistorique = this.props.punchlinersfound.map(function (punchliner, count) {
-        return( <HistoryLine lyrics={punchliner.lyrics} punchliner={punchliner.punchliner} key={count}/> );
+        return (<HistoryLine lyrics={punchliner.lyrics} punchliner={punchliner.punchliner} key={count} />);
       });
     }
     return (
@@ -146,18 +184,3 @@ class Punchline extends React.Component {
     )
   }
 }
-
-function newpunchline() {
-  location.reload();
-}
-
-const domContainer = document.querySelector('#main');
-
-const urlfetch = "/punchline";
-fetch(urlfetch).then(function (response) {
-  response.json().then(
-    function (samplepunchline) {
-      ReactDOM.render(<Punchliner punchline={samplepunchline} />, domContainer);
-    }
-  )
-});
