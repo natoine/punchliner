@@ -5,8 +5,16 @@ body {
 
 header {
     background-color: C4C4C4;
+    height: 5vh;
 }
 
+footer {
+    height:5vh;
+}
+
+.main {
+    height: 90vh;
+}
 
 .main, .game, .punchline, .answer {
     display: flex;
