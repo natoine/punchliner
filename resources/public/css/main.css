@@ -1,6 +1,12 @@
 body {
-    background-color: bisque;
+    background-color: E3E1E1;
+    font-family: sans-serif;
 }
+
+header {
+    background-color: C4C4C4;
+}
+
 
 .main, .game, .punchline, .answer {
     display: flex;
